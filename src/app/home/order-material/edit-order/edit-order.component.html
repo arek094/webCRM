@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Edycja zamówienia - {{numer_zam}}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <app-order-form #orderForm [editMode]="true"></app-order-form>
+        <hr>
+        <button mat-flat-button (click)="closeEditOrder()">Anuluj</button>
+        <button mat-raised-button color="warn" (click)="saveEditOrder()" [disabled]="orderForm.formOrder.invalid" >Zapisz</button>
+    </mat-card-content>
+</mat-card>
+
+<ngx-spinner></ngx-spinner>

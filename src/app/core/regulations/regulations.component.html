@@ -1,0 +1,79 @@
+<mat-dialog-content  class="modal-content">
+  <h4>Droga Klientko/Drogi Kliencie,</h4>
+  <p>Abyś, mógł/mogła w pełni korzystać z systemu potrzbujemy następujących zgód: </p>
+<div #returnHtml class="regulations-dialog" [formGroup]="formRegulations" [@.disabled]="disableAnimation" fxLayout="column" fxLayoutAlign="space-around stretch"  >  
+
+  <div class="personal-data" *ngIf="authService.permissionUser(22)">
+    <mat-expansion-panel [expanded]="false" (opened)="panelOpenState_personal-data = true" (closed)="panelOpenState_personal-data = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Zgody dotyczące przetwarzania danych osobowych
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState_personal-data ? 'zwiń' : 'rozwiń'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+        <app-personal-data></app-personal-data> 
+    </mat-expansion-panel>
+    <div class="checkbox-policy">
+      <mat-checkbox required formControlName="dane_osobowe_dodatkowe">
+          <span>Potwierdzam, że zapoznałem się i akceptuję zgody dotyczące przetwarzania danych osobowych.</span>
+          <mat-error *ngIf="formRegulations.get('dane_osobowe_dodatkowe').invalid">{{getErrorMessagePolicy()}}</mat-error>
+      </mat-checkbox>
+    </div>
+  </div>  
+
+  <div class="supplier" *ngIf="authService.permissionUser(23)">
+    <mat-expansion-panel [expanded]="false" (opened)="panelOpenState_supplier = true" (closed)="panelOpenState_supplier = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Regulamin Platformy
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState_supplier ? 'zwiń' : 'rozwiń'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+        <app-supplier></app-supplier> 
+    </mat-expansion-panel>
+    <div class="checkbox-policy">
+      <mat-checkbox required formControlName="regulamin_dodatkowy_dostawca">
+          <span>Potwierdzam, że zapoznałem się i akceptuję Regulamin Platformy.</span>
+          <mat-error *ngIf="formRegulations.get('regulamin_dodatkowy_dostawca').invalid">{{getErrorMessagePolicy()}}</mat-error>
+      </mat-checkbox>
+    </div>
+  </div> 
+
+  <div class="recipient" *ngIf="authService.permissionUser(24)">
+    <mat-expansion-panel [expanded]="false" (opened)="panelOpenState_recipient = true" (closed)="panelOpenState_recipient = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Regulamin Platformy
+        </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState_recipient ? 'zwiń' : 'rozwiń'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+        <app-recipient></app-recipient> 
+    </mat-expansion-panel>
+    <div class="checkbox-policy">
+      <mat-checkbox required formControlName="regulamin_dodatkowy_odbiorca">
+          <span>Potwierdzam, że zapoznałem się i akceptuję Regulamin Platformy.</span>
+          <mat-error *ngIf="formRegulations.get('regulamin_dodatkowy_odbiorca').invalid">{{getErrorMessagePolicy()}}</mat-error>
+      </mat-checkbox>
+    </div>
+  </div> 
+  
+
+</div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center"  class="modal-action">
+  <button mat-button (click)="notAkceptRegulations()">NIE ZGADZAM SIĘ</button>
+  <button mat-button (click)="akceptRegulations()">AKCEPTUJE</button>
+</mat-dialog-actions>
+
+
+
+<ngx-spinner></ngx-spinner>
+

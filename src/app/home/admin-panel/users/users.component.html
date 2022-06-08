@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Użytkownicy</mat-card-title>
+    <span class="space"></span>
+    <button mat-raised-button color="primary" (click)="openNewUser()"><mat-icon style="margin-bottom: 6px;margin-right: 5px;">add</mat-icon> Nowy użytkownik</button>
+  </mat-card-header>
+
+  <mat-form-field>
+    <mat-label>Wyszukaj</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Wyszukaj" #input>
+  </mat-form-field>
+
+  <mat-card-content>
+    <mat-table [dataSource]="dataSource" matSort class="user_table">
+    
+      <ng-container matColumnDef="nazwa_uzytkownika">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header> Nazwa uzytkownika </mat-header-cell >
+        <mat-cell *matCellDef="let element">{{element.nazwa_uzytkownika}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="firma">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header> Firma </mat-header-cell >
+        <mat-cell *matCellDef="let element">{{element.firma}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="grupa_nazwa">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header> Grupa </mat-header-cell >
+        <mat-cell *matCellDef="let element">{{element.grupa_nazwa}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="czy_aktywny">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header> Czy aktywny? </mat-header-cell >
+        <mat-cell *matCellDef="let element">{{element.czy_aktywny}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="funkcje">
+          <mat-header-cell  *matHeaderCellDef> Funkcje </mat-header-cell >
+          <mat-cell *matCellDef="let element"> 
+      
+          <button mat-icon-button (click)="openEditUser(element)"> 
+            <mat-icon>edit</mat-icon>
+          </button>
+      
+          </mat-cell>
+      </ng-container> 
+    
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+     
+    </mat-table>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <mat-paginator [pageSize]="10"  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+

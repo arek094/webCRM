@@ -1,0 +1,23 @@
+<div class="main-container"> 
+
+    <div class="header-container">
+        <app-header></app-header>
+    </div>
+
+<mat-sidenav-container class="home-container">
+
+    <mat-sidenav mode="side" opened fxLayout="column" fxLayoutAlign="start stretch" class="sidenav-container" >
+        <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    
+    <mat-sidenav-content class="content-container">
+        <div class="breadcrumb-container">
+            <app-breadcrumb></app-breadcrumb>
+        </div>
+        <div fxLayout="column"  fxLayoutAlign="start stretch" class="router-container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
+</div>

@@ -1,0 +1,4 @@
+----Do zrobienia----
+Usuniecie anulowanych pozycji z raportow zamowien surowcow
+
+----Zrobione--------

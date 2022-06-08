@@ -1,0 +1,19 @@
+<form [formGroup]="formLanguage" novalidate>
+  <ng-select #langSelect class="langSelect" appendTo="body" [items]="language" [searchable]="false" [clearable]="false"  formControlName="jezyk" (change)="onChange($event)" >
+    <ng-template ng-label-tmp let-item="item">
+       
+          <img style="vertical-align: middle; margin:15px;" [src]="item.src"/>
+        
+    </ng-template>
+    
+    <ng-template ng-option-tmp let-item="item" let-index="index">
+        
+          <img style="vertical-align: middle; " [src]="item.src"/>
+        
+    </ng-template>
+  </ng-select>
+
+</form>
+
+
+

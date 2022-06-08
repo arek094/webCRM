@@ -1,0 +1,13 @@
+{
+  "LOGIN": {
+    "LOGIN": "Nom d'utilisateur ou e-mail",
+    "HASLO": "Mot de passe",
+    "LANGUAGE": "Choisissez la langue",
+    "ZALOGUJ_SIE": "Inscription",
+    "ZAREJESTRUJ_SIE":"S'inscrire",
+    "NIE_PAMIETASZ_HASLA":"Mot de passe oublié?"
+  },
+  "ORDERRECIPIENTS": {
+    "TEST": "TEST-FR"
+  }
+}

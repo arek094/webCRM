@@ -1,0 +1,99 @@
+<mat-card>
+  <button mat-raised-button color="primary"  (click)="newNotification()" style="float: right;"><mat-icon style="margin-bottom: 6px;margin-right: 5px;">add</mat-icon> Dodaj zgłoszenie</button>
+
+
+  <mat-form-field>
+    <mat-label>Wyszukaj</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Wyszukaj" #input>
+  </mat-form-field>
+  
+  <table mat-table [dataSource]="dataSource" matSort  class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="numer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer </th>
+      <td mat-cell *matCellDef="let element"> {{element.numer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status_nazwa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'status-Otwarte': element.status_nazwa == 'Otwarte',
+                                                        'status-Wtrakcierealizacji': element.status_nazwa == 'W trakcie realizacji',
+                                                        'status-Zamknięte': element.status_nazwa == 'Zamknięte'}"> <button mat-flat-button class="button_status" color="primary">{{element.status_nazwa}}</button> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="uzytkownik_utworzenia">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Użytkownik </th>
+      <td mat-cell *matCellDef="let element"> {{element.uzytkownik_utworzenia}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="kontrahent_nazwa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Firma </th>
+      <td mat-cell *matCellDef="let element"> {{element.kontrahent_nazwa}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="temat_zgloszenia">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Temat </th>
+      <td mat-cell *matCellDef="let element"> {{element.temat_zgloszenia}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="opis_zgloszenia">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Opis </th>
+      <td mat-cell *matCellDef="let element"> {{element.opis_zgloszenia}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="telefon_kontaktowy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefon </th>
+      <td mat-cell *matCellDef="let element"> {{element.telefon_kontaktowy}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="uzytkownik_realizujacy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Osoba realizująca </th>
+      <td mat-cell *matCellDef="let element"> {{element.uzytkownik_realizujacy}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="data_utworzenia">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data utworzenia </th>
+      <td mat-cell *matCellDef="let element"> {{element.data_utworzenia}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="functions">
+      <th mat-header-cell *matHeaderCellDef> Funkcje </th>
+      <td mat-cell *matCellDef="let element"> 
+  
+          <button mat-icon-button [matMenuTriggerFor]="menuActions" matTooltip="Funkcje" [disabled]="(element.anulowany == 'T' ) ? true:false">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menuActions="matMenu">
+              <button mat-menu-item (click)="changeStatusWTR(element)" *ngIf="authService.permissionUser(29)">
+                <mat-icon>sync_alt</mat-icon>
+                <span>Status -> W trakcie realizacji</span>
+              </button>
+              <button mat-menu-item (click)="changeStatusZ(element)" *ngIf="authService.permissionUser(30)">
+                <mat-icon>sync_alt</mat-icon>
+                <span>Status -> Zamknięte</span>
+              </button>
+              <button mat-menu-item (click)="cancelNotification(element)" *ngIf="authService.permissionUser(31)">
+                <mat-icon>archive</mat-icon>
+                <span>Anuluj zgłoszenie</span>
+              </button>
+            </mat-menu>
+            
+      </td>
+  </ng-container> 
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'cancel-row': row.anulowany == 'T'}"></tr>
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Brak wyników "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  
+</mat-card>
+
+
+<ngx-spinner name="actionList"></ngx-spinner>

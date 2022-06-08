@@ -1,0 +1,38 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px" class="modal-header">
+  <mat-icon>message</mat-icon> 
+  <h4>Formularz kontaktowy</h4>
+  <span class="space"></span>
+  <button mat-icon-button (click)="dialogClose()"> 
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content  class="modal-content">
+  <h3>Masz pytanie lub problem dotyczący systemu webCRM?</h3>
+  Wypełnij poniższy formularz - odpowiemy tak szybko jak to będzie możliwe.
+
+  <form [formGroup]="formHelpMessage"> 
+
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Temat" formControlName="temat">
+        <mat-error *ngIf="formHelpMessage.get('temat').invalid">{{getErrorMessageSubject()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <textarea matInput placeholder="Twoja wiadomość" formControlName="wiadomosc" rows="10"></textarea>
+        <mat-error *ngIf="formHelpMessage.get('wiadomosc').invalid">{{getErrorMessageMessage()}}</mat-error>
+      </mat-form-field>
+
+  </form>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="modal-action">
+  <button mat-raised-button color="warn" (click)="sendHelpMessage()">Wyślij</button>
+</mat-dialog-actions>
+
+
+<ngx-spinner></ngx-spinner>
+
+

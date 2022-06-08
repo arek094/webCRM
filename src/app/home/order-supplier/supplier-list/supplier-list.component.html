@@ -1,0 +1,149 @@
+<button mat-icon-button matTooltip="Funkcje zbiorcze" [matMenuTriggerFor]="menu" *ngIf="authService.permissionUser(32)" > 
+  <mat-icon>more_vert</mat-icon>
+</button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="generateDeliveryNote()" *ngIf="authService.permissionUser(27)">
+      <mat-icon>receipt_long</mat-icon> 
+      <span>Wygeneruj wydanie</span>
+    </button>
+    <button mat-menu-item (click)="downloadOrderSupplierPDFSelected()" *ngIf="authService.permissionUser(38)">
+      <mat-icon>save</mat-icon> 
+      <span>Raport sumaryczny (*.pdf)</span>
+    </button>
+    <button mat-menu-item (click)="downloadLabelPDFSelected()" *ngIf="authService.permissionUser(39)">
+      <mat-icon>save</mat-icon> 
+      <span>Etykiety 80x40 (*.pdf)</span>
+    </button>
+    <button mat-menu-item (click)="downloadLabelPDFSelected20x40()" *ngIf="authService.permissionUser(40)">
+      <mat-icon>save</mat-icon> 
+      <span>Etykiety 20x40 (*.pdf)</span>
+    </button>
+    <button mat-menu-item (click)="exportExcelSelected()" *ngIf="authService.permissionUser(41)"> 
+      <mat-icon>import_export</mat-icon>
+      <span>Export (*.xls)</span>
+    </button>
+
+  </mat-menu>
+
+<button mat-icon-button matTooltip="Odśwież" (click)="refreshList()"> 
+  <mat-icon>refresh</mat-icon>
+</button>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Wyszukaj">
+</mat-form-field>
+
+
+<table mat-table [dataSource]="dataSource" matSort matSortActive="numer_zam" matSortDirection="desc" matSortDisableClear class="mat-elevation-z8">
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="numer_zam" > 
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer zamówienia </th>
+    <td mat-cell *matCellDef="let element" style="cursor: pointer;" (click)="showDetails(element)"> {{element.numer_zam}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="kontrahent_nazwa">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Firma </th>
+    <td mat-cell *matCellDef="let element">{{element.kontrahent_nazwa}}</td>
+  </ng-container> 
+  
+  <ng-container matColumnDef="status" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+    <td mat-cell *matCellDef="let element"> {{element.status_nazwa}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="data_realizacji">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data realizacji </th>
+    <td mat-cell *matCellDef="let element"> {{element.data_realizacji}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="uwagi">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Uwagi </th>
+    <td mat-cell *matCellDef="let element"> {{element.uwagi}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="anulowany">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Anulowany </th>
+      <td mat-cell *matCellDef="let element"> {{element.anulowany}} </td>
+    </ng-container>
+  
+  <ng-container matColumnDef="funkcje">
+    <th mat-header-cell *matHeaderCellDef> Funkcje </th>
+    <td mat-cell *matCellDef="let element"> 
+
+      <button mat-icon-button [matMenuTriggerFor]="menuReports" matTooltip="Raporty">
+          <mat-icon>insert_chart</mat-icon>
+        </button>
+        <mat-menu #menuReports="matMenu">
+          <button mat-menu-item (click)="downloadLabel20x40PDF(element)" *ngIf="authService.permissionUser(42)"> 
+            <mat-icon>save</mat-icon>
+            <span>Etykiety 20x40 (*.pdf)</span>
+          </button>
+          <button mat-menu-item (click)="downloadLabel20x40PDFPojedyncze(element)" *ngIf="authService.permissionUser(55)"> 
+            <mat-icon>save</mat-icon>
+            <span>Etykiety 20x40 POJEDYNCZE(*.pdf)</span>
+          </button>
+          <button mat-menu-item (click)="downloadLabel80x40PDF(element)" *ngIf="authService.permissionUser(43)"> 
+            <mat-icon>save</mat-icon>
+            <span>Etykiety 80x40 (*.pdf)</span>
+          </button>
+          <button mat-menu-item (click)="downloadLabel80x40PDFPojedyncze(element)" *ngIf="authService.permissionUser(54)"> 
+            <mat-icon>save</mat-icon>
+            <span>Etykiety 80x40 POJEDYNCZE(*.pdf)</span>
+          </button>
+          <button mat-menu-item (click)="downloadLabel80x40PerTuraPDF(element)" *ngIf="authService.permissionUser(44)"> 
+            <mat-icon>save</mat-icon>
+            <span>Etykiety 80x40 - tura (*.pdf)</span>
+          </button>
+          <button mat-menu-item (click)="downloadOrderSupplierPDF(element)" *ngIf="authService.permissionUser(45)"> 
+            <mat-icon>save</mat-icon>
+            <span>Raport detaliczny (*.pdf)</span>
+          </button>
+        
+          <button mat-menu-item (click)="downloadOrderSupplierPDFCode128(element)" *ngIf="authService.permissionUser(46)"> 
+            <mat-icon>save</mat-icon>
+            <span>Raport detaliczny - kod kreskowy (*.pdf)</span>
+          </button>
+          
+          <button mat-menu-item (click)="exportExcel(element)" *ngIf="authService.permissionUser(47)"> 
+            <mat-icon>import_export</mat-icon>
+            <span>Export (*.xls)</span>
+          </button>
+
+          <button mat-menu-item (click)="exportCSV(element)" *ngIf="authService.permissionUser(52)"> 
+            <mat-icon>import_export</mat-icon>
+            <span>Export (*.csv)</span>
+          </button>
+        </mat-menu>
+    </td>
+    
+  </ng-container> 
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'archive-row': row.anulowany == 'T'}" ></tr>
+  
+  
+  </table>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+  <ngx-spinner name="actionList"></ngx-spinner>
+
+
+  
+

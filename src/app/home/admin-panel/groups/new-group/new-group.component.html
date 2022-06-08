@@ -1,0 +1,24 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px" class="modal-header">
+    <mat-icon>settings</mat-icon> 
+    <h4> Tworzenie nowej grupy</h4>
+    <span class="space"></span>
+    <button mat-icon-button (click)="dialogClose()"> 
+      <mat-icon>close </mat-icon>
+    </button>
+  </div>
+  
+  <mat-dialog-content  class="modal-content">
+  
+    <app-group-form #groupForm></app-group-form>
+  
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end" class="modal-action">
+    <button mat-flat-button (click)="dialogClose()">Zamknij</button>
+    <button mat-raised-button color="warn" (click)="newGroup()">Zapisz</button>
+  </mat-dialog-actions>
+  
+  
+  <ngx-spinner></ngx-spinner>
+  
+  

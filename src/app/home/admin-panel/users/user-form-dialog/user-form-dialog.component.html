@@ -1,0 +1,57 @@
+<form [formGroup]="formUser" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+
+    <div fxFlex="60%" >
+    <mat-form-field appearance="outline">
+      <mat-label>Imie</mat-label>
+      <input formControlName="imie" matInput type="string" placeholder="Imie">
+      <mat-error *ngIf="formUser.get('imie').invalid">{{getErrorMessageFirstname()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nazwisko</mat-label>
+      <input formControlName="nazwisko" matInput type="string" placeholder="Nazwisko">
+      <mat-error *ngIf="formUser.get('nazwisko').invalid">{{getErrorMessageLastname()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nazwa użytkownika</mat-label>
+      <input formControlName="nazwa_uzytkownika" matInput type="string" placeholder="Nazwa użytkownika">
+      <mat-error *ngIf="formUser.get('nazwa_uzytkownika').invalid">{{getErrorMessageUsername()}}</mat-error>
+    </mat-form-field>
+        
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput type="string" placeholder="Email">
+      <mat-error *ngIf="formUser.get('email').invalid">{{getErrorMessageEmail()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nazwa firmy</mat-label>
+      <input formControlName="firma" matInput type="string" placeholder="Nazwa firmy">
+      <mat-error *ngIf="formUser.get('firma').invalid">{{getErrorMessageFirma()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hasło</mat-label>
+      <input formControlName="haslo" matInput type="password" placeholder="Hasło">
+      <mat-error *ngIf="formUser.get('haslo').invalid">{{getErrorMessagePassword()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+<div fxFlex="40%" >
+
+    <mat-form-field appearance="outline">
+        <mat-label>Grupa</mat-label>
+        <mat-select  formControlName="grupa_id">
+          <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.grupa_id">
+            {{userGroup.grupa_nazwa}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <ng-select [items]="contractors" #select bindLabel="kontrahent_nazwa" bindValue="kontrahent_id" placeholder="Kontrahent" formControlName="kontrahent_id"> </ng-select>
+
+    <mat-checkbox formControlName="czy_aktywny" labelPosition="before">Czy aktywny?</mat-checkbox>
+</div>
+
+</form>

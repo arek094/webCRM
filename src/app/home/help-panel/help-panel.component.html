@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-content>
+
+   <div fxLayout="row" fxLayoutGap="150px">
+
+      <div fxFlex="70%" >
+         <h3 style="margin-left: 40px;">{{nazwa_instrukcji}}</h3>
+
+            <pdf-viewer [src]="pdfSrc" 
+            [original-size]="false" 
+            [autoresize]="true"
+            style="display: block;"
+            ></pdf-viewer>
+      </div>
+   
+      <div fxFlex="30%" class="account-setting">
+         <h3>Poradnik użytkownika</h3>
+            <mat-accordion> 
+               <mat-expansion-panel *ngFor="let kategoria of instrukcje">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{kategoria.kategoria_nazwa}}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                
+                  <mat-nav-list>
+                     <mat-list-item *ngFor="let instrukcja of kategoria.instrukcja" (click)="changeInstructions(instrukcja.sciezka,instrukcja.instrukcja_nazwa)">
+                           > {{instrukcja.instrukcja_nazwa}}
+                     </mat-list-item>
+                  </mat-nav-list>
+                
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div fxLayout="column" fxLayoutAlign="center center" >
+               <h3>Nie znalazłeś odpowiedzi?</h3>
+               <button mat-raised-button color="primary" (click)="helpMessage()" style="height: 50px">Skontaktuj się z nami</button> 
+            </div>
+      </div>
+   
+   </div>
+
+  </mat-card-content>
+</mat-card>
+
+

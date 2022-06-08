@@ -1,0 +1,37 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px" class="modal-header">
+  <mat-icon>settings</mat-icon> 
+  <h4> Ustawienia grupy - {{data.grupa_nazwa}}</h4>
+  <span class="space"></span>
+  <button mat-icon-button (click)="dialogClose()"> 
+    <mat-icon>close </mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content  class="modal-content">
+
+  <mat-tab-group (selectedTabChange)="onLinkClick($event)">
+    <mat-tab *ngFor="let module of modules" [label]="module.modul_nazwa">
+
+      <mat-selection-list #objectAccessList [(ngModel)]="permissions" (ngModelChange)="onNgModelChange($event)">
+          <h3 mat-subheader>#&nbsp;&nbsp;&nbsp;Nazwa</h3>
+        <mat-list-option *ngFor="let objectAccess of module.item" [value]="objectAccess.obiekt_id">
+            {{objectAccess.obiekt_id}}&nbsp;&nbsp;&nbsp;{{objectAccess.obiekt_nazwa}}
+          <mat-divider></mat-divider>
+        </mat-list-option>
+      </mat-selection-list>
+      
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-spinner *ngIf="loading"></mat-spinner>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="modal-action">
+  <button mat-flat-button (click)="dialogClose()">Zamknij</button>
+  <button mat-raised-button color="warn" (click)="updateGroups()">Zapisz</button>
+</mat-dialog-actions>
+
+<ngx-spinner></ngx-spinner>
+
+

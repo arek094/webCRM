@@ -1,0 +1,74 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px" class="modal-header">
+    <mat-icon>description</mat-icon> 
+    <h4>Szczegóły zamówienia</h4>
+    <span class="space"></span>
+    <button mat-icon-button (click)="dialogClose()"> 
+      <mat-icon>close </mat-icon>
+    </button>
+  </div>
+  
+  <mat-dialog-content  class="modal-content">
+  
+      <span >Numer zamówienia: {{order.numer_zam}}</span><br>
+      <span >Data realizacji: {{order.data_realizacji}}</span><br>
+      <span >Data realizacji magazyn: {{order.data_realizacji_magazyn}}</span><br>
+      <span >Wynikowy typ dokumentu: {{order.typ_dok_erp_idm}}</span><br>
+      <span >Uwagi: {{order.uwagi}}</span><br><br>
+    
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="nr_poz" matSortDirection="asc" matSortDisableClear class="mat-elevation-z8">
+
+        <ng-container matColumnDef="nr_poz">
+          <th mat-header-cell *matHeaderCellDef> Pozycja </th>
+          <td mat-cell *matCellDef="let element"> {{element.nr_poz}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="wytwor_idm">
+          <th mat-header-cell *matHeaderCellDef> Indeks wytworu </th>
+          <td mat-cell *matCellDef="let element"> {{element.wytwor_idm}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="wytwor_nazwa">
+          <th mat-header-cell *matHeaderCellDef> Nazwa wytworu </th>
+          <td mat-cell *matCellDef="let element"> {{element.wytwor_nazwa}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="jm_idn">
+          <th mat-header-cell *matHeaderCellDef> Jm </th>
+          <td mat-cell *matCellDef="let element"> {{element.jm_idn}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="ilosc_oczekiwana">
+          <th mat-header-cell *matHeaderCellDef> Ilość oczekiwana </th>
+          <td mat-cell *matCellDef="let element"> {{element.ilosc_oczekiwana}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="ilosc_wydana">
+            <th mat-header-cell *matHeaderCellDef> Ilość wydana </th>
+            <td mat-cell *matCellDef="let element"> {{element.ilosc_wydana}} </td>
+          </ng-container>
+    
+        <ng-container matColumnDef="uwagi_poz">
+            <th mat-header-cell *matHeaderCellDef> Uwagi </th>
+            <td mat-cell *matCellDef="let element"> {{element.uwagi_poz}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'archive-row': row.anulowany == 'T'}"></tr>
+      </table>
+
+      <mat-spinner *ngIf="loading"></mat-spinner>
+  
+  </mat-dialog-content>
+
+  
+  
+  <mat-dialog-actions align="end" class="modal-action">
+    <button mat-flat-button (click)="dialogClose()">Zamknij</button>
+    <button mat-raised-button color="warn" [disabled]="edit" (click)="gotoEditOrder()">Edytuj</button>
+  </mat-dialog-actions>
+  
+  
+  
+  
+  
+  

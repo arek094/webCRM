@@ -1,0 +1,42 @@
+.content-form{
+  h3{
+    line-height: 0;
+  }
+  hr{
+    margin-bottom: 40px;
+  }
+  
+}
+.ng-select.custom {
+  width: 100%;
+}
+
+.ng-select.custom .ng-value-container {
+ height: 59.5px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container{
+  height: 59.5px;
+  margin-bottom: 20px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container .ng-input{
+  top: 15px;
+}
+
+
+.mat-grid-tile{
+  //border: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+.archive-product{
+  opacity: 0.3;
+}
+
+.brak-magazyn{
+  color: #d32f2f;
+}
+
+

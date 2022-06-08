@@ -1,0 +1,21 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px" class="modal-header">
+  <mat-icon>settings</mat-icon> 
+  <h4> Edycja - {{data.nazwisko}} {{data.imie}}</h4>
+  <span class="space"></span>
+  <button mat-icon-button (click)="dialogClose()"> 
+    <mat-icon>close </mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content  class="modal-content">
+
+  <app-user-form-dialog #userForm [editMode]="true"></app-user-form-dialog>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="modal-action">
+  <button mat-flat-button (click)="dialogClose()">Zamknij</button>
+  <button mat-raised-button color="warn" (click)="updateUser()">Zapisz</button>
+</mat-dialog-actions>
+
+<ngx-spinner></ngx-spinner>

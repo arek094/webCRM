@@ -1,0 +1,27 @@
+
+  <app-toolbar></app-toolbar>
+<div #businessAgreement1 class="container-fluid" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card>
+<nav mat-tab-nav-bar mat-stretch-tabs class="tabs-business-agreement ">
+  <a *ngFor="let link of navLinks" mat-tab-link
+    #rla="routerLinkActive"
+    [active]="isViewInitialized && isLinkActive(rla)"
+    [routerLink]="link.path"
+    routerLinkActive>
+    {{link.label}}
+  </a>
+</nav>
+
+<router-outlet ></router-outlet>
+
+  </mat-card>
+<div>
+
+
+
+
+
+
+
+
+   

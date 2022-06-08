@@ -1,0 +1,116 @@
+<app-toolbar></app-toolbar>
+
+<div class="container-fluid" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="login-card">
+    <mat-card-header>
+        <img src="../../../assets/images/logo_webCRM.png" alt="logo_IP" class="logo" >
+    </mat-card-header>
+        <h3 style="text-align: center;line-height: 0px;">Załóż konto</h3>
+        <p style="text-align: center;">Wpisz swoje dane i załóż konto webCRM.</p>
+        <mat-card-content>
+            <form class="register-form" [formGroup]="formRegister">
+                
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">    
+                <mat-form-field appearance="outline">
+                    <mat-label>Imie</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">person</mat-icon>
+                    <input matInput placeholder="Imie" formControlName="imie">
+                    <mat-error *ngIf="formRegister.get('imie').invalid">{{getErrorMessageFirstname()}}</mat-error>
+                </mat-form-field>
+            
+                <mat-form-field appearance="outline">
+                    <mat-label>Nazwisko</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">person</mat-icon>
+                    <input matInput placeholder="Nazwisko" formControlName="nazwisko">
+                    <mat-error *ngIf="formRegister.get('nazwisko').invalid">{{getErrorMessageLastname()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">  
+                <mat-form-field appearance="outline">
+                    <mat-label>Nazwa użytkownika</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">perm_contact_calendar</mat-icon>
+                    <input matInput placeholder="Nazwa użytkownika" formControlName="nazwa_uzytkownika">
+                    <mat-error *ngIf="formRegister.get('nazwa_uzytkownika').invalid">{{getErrorMessageUsername()}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Nazwa firmy</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">location_city</mat-icon>
+                    <input matInput placeholder="Nazwa firmy" formControlName="firma">
+                    <mat-error *ngIf="formRegister.get('firma').invalid">{{getErrorMessageFirma()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Adres e-mail</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">email</mat-icon>
+                    <input matInput placeholder="Adres e-mail" formControlName="email">
+                    <mat-error *ngIf="formRegister.get('email').invalid">{{getErrorMessageEmail()}}</mat-error>
+                </mat-form-field>
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">  
+                <mat-form-field appearance="outline">
+                    <mat-label>Hasło</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">lock</mat-icon>
+                    <input matInput type="password" placeholder="Hasło"  formControlName="haslo">
+                    <mat-error *ngIf="formRegister.get('haslo').invalid">{{getErrorMessagePassword()}}</mat-error>
+                </mat-form-field>
+
+            
+                <mat-form-field appearance="outline">
+                    <mat-label>Powtórz hasło</mat-label>
+                    <mat-icon matPrefix style="vertical-align: middle; margin-bottom: 12px; margin-right: 10px;">lock</mat-icon>
+                    <input matInput type="password" placeholder="Powtórz hasło"  formControlName="powtorzhaslo">
+                    <mat-error *ngIf="formRegister.get('powtorzhaslo').errors && formRegister.get('powtorzhaslo').errors">Podane hasła nie są identyczne</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="checkbox-policy">
+                <mat-checkbox required formControlName="polityka_cookie">
+                    <span>Potwierdzam, że zapoznałem się i akceptuję <a [routerLink]="['/business-agreement/cookie-policy']" target="_blank" routerLinkActive="active">Politykę cookie</a>.</span>
+                    <mat-error *ngIf="formRegister.get('polityka_cookie').invalid">{{getErrorMessagePolicy()}}</mat-error>
+                </mat-checkbox>
+                <mat-checkbox required="true" formControlName="polityka_prywatnosci">
+                    <span>Potwierdzam, że zapoznałem się i akceptuję <a [routerLink]="['/business-agreement/privacy-policy']" target="_blank" routerLinkActive="active">Politykę prywatności</a>.</span>
+                    <mat-error *ngIf="formRegister.get('polityka_prywatnosci').invalid">{{getErrorMessagePolicy()}}</mat-error>
+                </mat-checkbox>
+                <mat-checkbox required="true" formControlName="polityka_przerw_dostepnosci">
+                    <span>Potwierdzam, że zapoznałem się i akceptuję <a [routerLink]="['/business-agreement/technical-break-policy']" target="_blank" routerLinkActive="active">Politykę przerw technicznych i dostępności platformy</a>.</span>
+                    <mat-error *ngIf="formRegister.get('polityka_przerw_dostepnosci').invalid">{{getErrorMessagePolicy()}}</mat-error>
+                </mat-checkbox>
+                <mat-checkbox required="true" formControlName="info_administratora">
+                    <span>Potwierdzam, że zapoznałem się i akceptuję informację dotyczące <a [routerLink]="['/business-agreement/personal-data-administrator']" target="_blank" routerLinkActive="active">Administratora danych osobowych i partnerów obsługujących</a>.</span>
+                    <mat-error *ngIf="formRegister.get('info_administratora').invalid">{{getErrorMessagePolicy()}}</mat-error>
+                </mat-checkbox>
+                <mat-checkbox required="true" formControlName="info_przetwarzania_danych">
+                    <span>Potwierdzam, że zapoznałem się i akceptuję informacje dotyczące <a [routerLink]="['/business-agreement/personal-data-processing']" target="_blank" routerLinkActive="active">Przetwarzania danych osobowych</a>.</span>
+                    <mat-error *ngIf="formRegister.get('info_przetwarzania_danych').invalid">{{getErrorMessagePolicy()}}</mat-error>
+                </mat-checkbox>
+                <div class="captcha" style="margin-bottom: 15px;"  fxLayout="column" fxLayoutAlign="center center">
+                    <re-captcha [formControl]="formRegister.controls['captcha']"></re-captcha>
+                    <mat-error *ngIf="formRegister.get('captcha').invalid">{{getErrorMessagePolicy()}}</mat-error>
+                </div>
+
+            </div>
+
+                <button mat-raised-button (click)="registerUser()" color="primary" type="submit" class="button-login">Załóż konto</button>
+          </form>
+        </mat-card-content>
+  
+            <div class="row">
+                <div class="col" style="text-align: center; margin: 10px">
+                    <p class="font-weight-bold" style="display: contents;">Posiadasz już konto?</p>
+                    <a routerLink="/login" class="text-decoration-none" style="text-decoration: blink;"> Logowanie</a>
+                </div>
+            </div>
+        
+
+  </mat-card>
+
+
+</div>
+
+
+
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,23 @@
+@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
+@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+// Using the $theme variable from the pre-built theme you can call the theming function
+
+
+$bodyfont: 'Poppins', sans-serif;
+$headingfont: 'Poppins', sans-serif;
+
+@include mat-core();
+$custom-theme-primary: mat-palette($mat-blue, 600);
+$custom-theme-accent:mat-palette($mat-pink, A200, A100, A400);
+$custom-theme-warn: mat-palette($mat-red);
+$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+@include angular-material-theme($custom-theme);
+@include mat-datetimepicker-theme($custom-theme);
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins, sans-serif',
+  $subheading-1: mat-typography-level(19px, 30px, 300)
+);
+@include mat-core($custom-typography);
+

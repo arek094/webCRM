@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Grupy</mat-card-title>
+    <span class="space"></span>
+    <button mat-raised-button color="primary" (click)="openNewGroup()"><mat-icon style="margin-bottom: 6px;margin-right: 5px;">add</mat-icon> Nowa grupa</button>
+  </mat-card-header>
+  <mat-card-content>
+      
+      <mat-table [dataSource]="dataSource" class="user_table">
+        <ng-container matColumnDef="grupa_id" > 
+          <mat-header-cell *matHeaderCellDef> # </mat-header-cell >
+          <mat-cell *matCellDef="let element"> {{element.grupa_id}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="grupa_nazwa">
+          <mat-header-cell *matHeaderCellDef> Grupa </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.grupa_nazwa}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="funkcje">
+            <mat-header-cell  *matHeaderCellDef> Funkcje </mat-header-cell >
+            <mat-cell *matCellDef="let element"> 
+        
+            <button mat-icon-button (click)="openGroupDialogPermission(element)" matTooltip="Zmiana uprawnień"> 
+              <mat-icon>perm_data_setting</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="editGroupDialog(element)" matTooltip="Edycja"> 
+              <mat-icon>edit</mat-icon>
+            </button>
+        
+            </mat-cell>
+        </ng-container> 
+      
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+       
+      </mat-table>
+      <mat-spinner *ngIf="loading"></mat-spinner>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,21 @@
+<form [formGroup]="formNotification" fxLayout="column" fxLayoutAlign="space-between center">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Temat zgłoszenia</mat-label>
+    <input formControlName="temat_zgloszenia" matInput type="string" placeholder="Temat zgłoszenia">
+    <mat-error *ngIf="formNotification.get('temat_zgloszenia').invalid">{{getErrorMessageTopic()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Telefon kontaktowy</mat-label>
+    <input formControlName="telefon_kontaktowy" matInput type="tel" placeholder="Telefon kontaktowy">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Opis zgłoszenia</mat-label>
+    <textarea matInput placeholder="Opis zgłoszenia" formControlName="opis_zgloszenia" rows="10"></textarea>
+    <mat-error *ngIf="formNotification.get('opis_zgloszenia').invalid">{{getErrorMessageDescription()}}</mat-error>
+  </mat-form-field>
+      
+
+</form>

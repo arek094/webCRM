@@ -1,0 +1,16 @@
+.user_table{
+    box-shadow: none;
+    width: 100%;
+
+    .mat-cell{
+        justify-content: center;
+    }
+
+    .mat-header-cell{
+        justify-content: center;
+    }
+}
+
+.space {
+    flex: 1 1 auto;
+  }

@@ -1,0 +1,33 @@
+table{
+    width: 100%;
+    table-layout: fixed;
+}
+
+
+.cancel-row .mat-cell {
+  color: lightgray;
+  .mat-flat-button.mat-primary{
+    opacity: 0.3;
+  }
+}
+
+.status-Otwarte .mat-flat-button.mat-primary{
+    width: 95%;
+    background-color: #ef9a9a;
+    color: #d32f2f;
+    cursor: text;
+  }
+  
+  .status-Wtrakcierealizacji .mat-flat-button.mat-primary{
+    width: 95%;
+    background-color: #90caf9;
+    color:#1976d2;
+    cursor: text;
+  }
+  
+  .status-Zamknięte .mat-flat-button.mat-primary{
+    width: 95%;
+    background-color: #a5d6a7;
+    color: #388e3c;
+    cursor: text;
+  }

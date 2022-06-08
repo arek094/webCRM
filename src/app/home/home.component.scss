@@ -1,0 +1,35 @@
+.header-container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+
+.home-container{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 64px;
+  
+  .sidenav-container{
+    display: flex;
+    justify-content: center;
+    width: 240px;
+    background-color: #fff;
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .content-container{
+    background-color: #eef5f9;
+
+    .breadcrumb-container{
+      background-color: #fff;
+    }
+  
+    .router-container{
+      margin: 20px;
+    }
+  }
+}

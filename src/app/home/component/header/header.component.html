@@ -1,0 +1,53 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="start stretch">
+
+      <div fxFlex="240px" fxLayoutAlign="center center" class="navbar-header">
+        <!--<img src="../../../../assets/images/logo-light-icon.png" class="logo" alt="homepage">-->
+        <span>webCRM</span>
+      </div>
+
+<!--
+      <div fxLayoutAlign="center center" class="navbar-icon">
+        <mat-icon>reorder</mat-icon>
+        <mat-icon>search</mat-icon>
+      </div>
+-->
+      <span class="space"></span>
+      
+      <div fxLayoutAlign="left center" class="navbar-collapse">
+        
+          <button mat-button [matMenuTriggerFor]="menu">
+            
+              <img src="../../../../assets/images/user-account.png" width="35" height="35" class="profile-picture"  alt="user"> <span class="mat-subheading-1">{{authService?.user?.nazwa_uzytkownika}}</span>
+              <mat-icon style="padding-right: 20px">keyboard_arrow_down</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu" >
+              <button mat-menu-item (click)="toAccountSetting()">
+                  <mat-icon>settings</mat-icon>
+                  <span>Ustawienia konta</span>
+                </button>
+                <button mat-menu-item (click)="changePassword()">
+                  <mat-icon>vpn_key</mat-icon>
+                  <span>Zmień hasło</span>
+                  </button>
+                <button mat-menu-item (click)="helpMessage()">
+                  <mat-icon >message</mat-icon>
+                  <span>Formularz kontaktowy</span>
+                </button>
+                <button mat-menu-item (click)="toHelpPanel()">
+                    <mat-icon >help</mat-icon>
+                    <span>Pomoc</span>
+                  </button>
+                <button mat-menu-item (click)="authService.logout()">
+                  <mat-icon >power_settings_new</mat-icon>
+                  <span>Wyloguj</span>
+                </button>
+          </mat-menu>
+
+          <app-change-language></app-change-language>
+
+      </div>
+
+     
+      
+</mat-toolbar>

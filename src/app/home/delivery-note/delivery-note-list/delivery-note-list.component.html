@@ -1,0 +1,150 @@
+
+
+
+<mat-card>
+  <mat-card-title>Tymczasowy dokument wydania</mat-card-title>
+  <table mat-table [dataSource]="dataSourceNoteTemp" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="wydanie_nag_dost_id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.wydanie_nag_dost_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="numer">
+      <th mat-header-cell *matHeaderCellDef> Numer </th>
+      <td mat-cell *matCellDef="let element" style="cursor: pointer;" (click)="showDetailsTemp(element)"> {{element.numer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="data_utworzenia">
+      <th mat-header-cell *matHeaderCellDef> Data utworzenia </th>
+      <td mat-cell *matCellDef="let element"> {{element.data_utworzenia}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsNoteTemp"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsNoteTemp;"></tr>
+  </table>
+  <mat-spinner *ngIf="loadingTemp"></mat-spinner>
+</mat-card>
+
+
+<mat-card>
+  <mat-card-title>Lista dokumentów wydania</mat-card-title>
+
+  <button mat-icon-button matTooltip="Funkcje zbiorcze" [matMenuTriggerFor]="menu" *ngIf="authService.permissionUser(56)" > 
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="exportCSVSelected()" *ngIf="authService.permissionUser(57)"> 
+        <mat-icon>import_export</mat-icon>
+        <span>Export (*.csv)</span>
+      </button>
+  
+    </mat-menu>
+  
+  <button mat-icon-button matTooltip="Odśwież" (click)="refreshListNote()"> 
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'ORDERRECIPIENTS.SEARCH' | translate }}">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSourceNote" matSort matSortActive="data_utworzenia" matSortDirection="desc" matSortDisableClear class="mat-elevation-z8">
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="wydanie_nag_dost_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.wydanie_nag_dost_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="numer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer </th>
+      <td mat-cell *matCellDef="let element" style="cursor: pointer;" (click)="showDetails(element)"> {{element.numer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status_nazwa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status_nazwa}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="kontrahent_nazwa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Kontrahent </th>
+      <td mat-cell *matCellDef="let element"> {{element.kontrahent_nazwa}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="data_utworzenia">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data utworzenia </th>
+      <td mat-cell *matCellDef="let element"> {{element.data_utworzenia}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="funkcje">
+      <th mat-header-cell *matHeaderCellDef> Funkcje </th>
+      <td mat-cell *matCellDef="let element"> 
+
+        <button mat-icon-button [matMenuTriggerFor]="menuActions" matTooltip="Funkcje">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menuActions="matMenu">
+          <button mat-menu-item (click)="editDelivery(element)" *ngIf="authService.permissionUser(33)" >
+            <mat-icon>edit</mat-icon>
+            <span>Edycja</span>
+          </button>
+          <button mat-menu-item (click)="confirmDelivery(element)" *ngIf="authService.permissionUser(51)" >
+            <mat-icon>thumb_up_alt</mat-icon>
+            <span>Przyjęcie wydania</span>
+          </button>
+        </mat-menu>
+  
+        <button mat-icon-button [matMenuTriggerFor]="menuReports" matTooltip="Raporty">
+            <mat-icon>insert_chart</mat-icon>
+        </button>
+          <mat-menu #menuReports="matMenu">
+            <button mat-menu-item (click)="downloadNotePDFTura(element)" *ngIf="authService.permissionUser(48)"> 
+              <mat-icon>save</mat-icon>
+              <span>Dokument wydania (*.pdf)</span>
+            </button>
+            <button mat-menu-item (click)="downloadNotePDF(element)" *ngIf="authService.permissionUser(53)"> 
+              <mat-icon>save</mat-icon>
+              <span>Dokument wydania (*.pdf)</span>
+            </button>
+            <button mat-menu-item (click)="downloadOrderSupplierPDFCode128(element)" *ngIf="authService.permissionUser(49)"> 
+              <mat-icon>save</mat-icon>
+              <span>Raport detaliczny - kod kreskowy (*.pdf)</span>
+            </button>
+            <button mat-menu-item (click)="exportExcel(element)" *ngIf="authService.permissionUser(50)">
+              <mat-icon>import_export</mat-icon>
+              <span>Eksport (*.xlsx)</span>
+            </button>
+            <button mat-menu-item (click)="exportCSV(element)" *ngIf="authService.permissionUser(58)"> 
+              <mat-icon>import_export</mat-icon>
+              <span>Export (*.csv)</span>
+            </button>
+          </mat-menu>
+      </td>
+      
+    </ng-container> 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsNote"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsNote;"></tr>
+  </table>
+  <mat-spinner *ngIf="loadingNote"></mat-spinner>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</mat-card>
+
+
+<ngx-spinner name="actionList"></ngx-spinner>

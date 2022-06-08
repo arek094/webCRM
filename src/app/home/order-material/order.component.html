@@ -1,0 +1,13 @@
+<mat-card>
+    <button mat-raised-button color="primary" *ngIf="authService.permissionUser(13)" (click)="openNewOrder()" style="float: right; margin-bottom: 10px;"><mat-icon style="margin-bottom: 6px;margin-right: 5px;">add</mat-icon> Dodaj nowe zamówienie</button>
+    <app-order-list ></app-order-list>
+</mat-card>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+<div fxLayout="row">
+
+    <div fxFlex="25%" >
+        <mat-card>
+          <div fxLayout="column" fxLayoutAlign="center center" >
+            <div class="user-picture">
+                <img src="../../../../assets/images/user-account.png"  alt="user-account" height="200" width="200">
+            </div>
+            <div class="user-info">
+                <mat-card-title>{{imie}} {{nazwisko}}</mat-card-title>
+                <mat-card-subtitle>{{kontrahent_nazwa}}</mat-card-subtitle>
+            </div>  
+          </div>
+        </mat-card>
+    </div>
+
+    <div fxFlex="75%" class="account-setting">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Ustawienia konta</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <form [formGroup]="formUser" >
+
+          <mat-form-field appearance="outline">
+            <mat-label>Imie</mat-label>
+            <input formControlName="imie" matInput type="string" placeholder="Imie">
+            <mat-error *ngIf="formUser.get('imie').invalid">{{getErrorMessageFirstname()}}</mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>Nazwisko</mat-label>
+            <input formControlName="nazwisko" matInput type="string" placeholder="Nazwisko">
+            <mat-error *ngIf="formUser.get('nazwisko').invalid">{{getErrorMessageLastname()}}</mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>Nazwa użytkownika</mat-label>
+            <input formControlName="nazwa_uzytkownika" matInput type="string" placeholder="Nazwa użytkownika">
+            <mat-error *ngIf="formUser.get('nazwa_uzytkownika').invalid">{{getErrorMessageUsername()}}</mat-error>
+          </mat-form-field>
+              
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput type="string" placeholder="Email">
+            <mat-error *ngIf="formUser.get('email').invalid">{{getErrorMessageEmail()}}</mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>Nazwa firmy</mat-label>
+            <input formControlName="firma" matInput type="string" placeholder="Nazwa firmy">
+            <mat-error *ngIf="formUser.get('firma').invalid">{{getErrorMessageFirma()}}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+              <mat-label>Domyślny język</mat-label>
+              <mat-select formControlName="jezyk">
+                <mat-option *ngFor="let lang of language" [value]="lang.value" >
+                  {{lang.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+      
+
+          <button mat-raised-button color="primary" (click)="saveEditUser()">Zaktualizuj profil</button>
+        </form>
+      </mat-card-content>
+      </mat-card>
+    </div>
+
+</div>
+
+<ngx-spinner name="actionSaveUser"></ngx-spinner>

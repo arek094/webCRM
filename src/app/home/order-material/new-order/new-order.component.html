@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Nowe zamówienie</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <app-order-form #orderForm></app-order-form>
+        <hr>
+        <button mat-flat-button (click)="closeNewOrder()">Anuluj</button>
+        <button mat-raised-button color="warn" [disabled]="orderForm.formOrder.invalid" (click)="createOrder()" style="margin-left: 30px;">Zapisz</button>
+    </mat-card-content>
+</mat-card>
+
+<ngx-spinner></ngx-spinner>
+
+  
+      
+
+
+
+
+ 

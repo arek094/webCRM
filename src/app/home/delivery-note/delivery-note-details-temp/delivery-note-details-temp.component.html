@@ -1,0 +1,75 @@
+<div mat-dialog-title fxLayout="row" fxLayoutAlign="start center"  fxLayoutGap="10px" class="modal-header">
+  <mat-icon>description</mat-icon> 
+  <h4>Szczegóły wydania</h4>
+  <span class="space"></span>
+  <button mat-icon-button (click)="dialogClose()"> 
+    <mat-icon>close </mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content  class="modal-content">
+
+  <form [formGroup]="formNumerObcy">  
+                   
+    <mat-form-field appearance="outline">
+        <mat-label>Numer WZ (obcy)</mat-label>
+        <input matInput formControlName="numerwzobcy" placeholder="Numer WZ (obcy)">
+    </mat-form-field>
+
+  </form>
+ 
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="zam_poz_dost_id" matSortDirection="asc" matSortDisableClear class="mat-elevation-z8">
+  
+      <ng-container matColumnDef="numer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer wydania </th>
+        <td mat-cell *matCellDef="let element"> {{element.numer}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="numer_zam_poz">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer zamówienia </th>
+        <td mat-cell *matCellDef="let element"> {{element.numer_zam_poz}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="wytwor_idm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Indeks wytworu </th>
+        <td mat-cell *matCellDef="let element"> {{element.wytwor_idm}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="nazwa">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa wytworu </th>
+        <td mat-cell *matCellDef="let element"> {{element.nazwa}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="ilosc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilość </th>
+        <td mat-cell *matCellDef="let element"> {{element.ilosc}} </td>
+      </ng-container> 
+
+      <ng-container matColumnDef="funkcje">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Funkcje </th>
+        <td mat-cell *matCellDef="let element"> 
+            
+          <button mat-icon-button (click)="deletePosition(element)" matTooltip="Usuń"> 
+            <mat-icon>delete</mat-icon>
+          </button>
+      
+        </td>
+      </ng-container>
+  
+     
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="modal-action">
+  <button mat-flat-button (click)="dialogClose()">Zamknij</button>
+  <button mat-flat-button (click)="saveInformationNag()" >Zapisz</button>
+  <button mat-raised-button color="warn" (click)="confirmationNote()" *ngIf="authService.permissionUser(35)">Zatwierdź</button>
+</mat-dialog-actions>
+
+<ngx-spinner name="actionList"></ngx-spinner>
+
+
+

@@ -1,0 +1,7 @@
+{
+    "/api/*": {
+        "target": "https://crm.intertrend.pl",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

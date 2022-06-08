@@ -1,0 +1,27 @@
+.user-info{
+    text-align: center;
+}
+
+.account-setting{
+    .mat-card{
+        padding: 0px !important;
+
+        .mat-card-header{
+            background: #1e88e5;
+            border-color: #1e88e5;
+            color: #ffffff!important;
+            padding-bottom: 10px;
+            padding-top: 10px;          
+        }
+
+        .mat-card-header .mat-card-title{
+            margin-bottom: 0px;
+            font-weight: 400; 
+            font-size: 18px;  
+        }
+
+        .mat-card-content{
+            padding: 1.25rem
+        }
+    }
+}

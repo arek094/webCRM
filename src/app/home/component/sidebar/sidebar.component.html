@@ -1,0 +1,79 @@
+<div fxLayoutAlign="start end" class="user-info">
+    <button mat-flat-button style="line-height: 15px; padding-bottom:5px; padding-top:10px;text-align: left;">
+      <mat-icon style="float: right;">arrow_drop_down</mat-icon>
+      <span>{{authService?.user?.imie}} {{authService?.user?.nazwisko}}</span><br>
+      <small><i>{{authService?.user?.kontrahent_nazwa}}</i></small>
+    </button>
+</div>
+
+<div class="menu-list">
+  <mat-nav-list >
+  <h3 mat-subheader>MENU</h3>
+
+  <mat-list-item routerLink="/dashboard" *ngIf="authService.permissionUser(16)">
+    <mat-icon matListIcon>insert_chart</mat-icon>
+    <span matLine>Panel kontrolny</span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+
+  <mat-list-item routerLink="/order-material" *ngIf="authService.permissionUser(15)">
+    <mat-icon matListIcon>layers</mat-icon>
+    <span matLine>Zamówienia<br>surowców</span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+
+  <mat-list-item routerLink="/order-supplier" *ngIf="authService.permissionUser(17)">
+    <mat-icon matListIcon>local_shipping</mat-icon>
+    <span matLine>Zamówienia<br>dostawców</span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+
+  <mat-list-item routerLink="/delivery-note" *ngIf="authService.permissionUser(25)">
+    <mat-icon matListIcon>receipt_long</mat-icon>
+    <span matLine>Dokument<br>wydania</span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+  
+  
+  <mat-list-item routerLink="/order-recipients" *ngIf="authService.permissionUser(18)">
+    <mat-icon matListIcon>assignment</mat-icon>
+    <span matLine>
+      <div style="white-space: pre-line;">
+        {{ 'SLIDEBAR.ZAMOWIENIAODB' | translate }}
+      </div>
+    </span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+
+
+  <mat-list-item routerLink="/admin-panel" *ngIf="authService.permissionUser(14)">
+    <mat-icon matListIcon>settings</mat-icon>
+    <span matLine>Panel<br>administracyjny</span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+
+  
+  <mat-list-item routerLink="/notification" *ngIf="authService.permissionUser(28)">
+    <mat-icon matListIcon>notifications</mat-icon>
+    <span matLine>
+      <div style="white-space: pre-line;">
+       {{ 'SLIDEBAR.PANELZGLOSZEN' | translate }}
+      </div>
+    </span>
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+
+</mat-nav-list>
+</div>
+
+<div class="sidebar-icon-bottom">
+  <button mat-icon-button matTooltip="Ustawienia" (click)="toAccountSetting()">  
+    <mat-icon>settings</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Pomoc" (click)="toHelpPanel()"> 
+    <mat-icon>help</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Wyloguj się" (click)="this.authService.logout()"> 
+    <mat-icon>power_settings_new</mat-icon>
+  </button>
+</div>

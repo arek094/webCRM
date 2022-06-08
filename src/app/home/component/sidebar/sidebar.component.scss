@@ -1,0 +1,41 @@
+.user-info{
+    background: url(../../../../assets/images/ip_logo.jpg) no-repeat;
+    //height: 161px;
+    height: 145px;
+    background-size: contain;
+
+
+    .mat-flat-button{
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        color: white;
+    }
+}
+
+
+.menu-list{
+    .mat-list-item{
+        margin-bottom: 15px;
+    }
+}
+
+.sidebar-icon-bottom{
+    position: fixed;
+    z-index: 10;
+    bottom: 0px;
+    left: 0px;
+    -webkit-transition: 0.2s ease-out;
+    -o-transition: 0.2s ease-out;
+    transition: 0.2s ease-out;
+    width: 240px;
+    background: #f2f6f8;
+    border-top: 1px solid rgba(120, 130, 140, 0.13);
+    padding-bottom: 5px;
+
+    .mat-icon-button{
+        width: 33.333337%;
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}

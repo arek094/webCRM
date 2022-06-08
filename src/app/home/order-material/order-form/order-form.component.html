@@ -1,0 +1,163 @@
+<div fxLayout="column"  class="content-form">
+
+  <div>
+    <h3>Szczegóły zamówienia</h3>
+    <hr>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="10%" fxLayoutAlign="space-around center">
+    
+    
+      <div fxFlex="50%" >
+          <form [formGroup]="formOrder">  
+                    
+              <mat-form-field>
+                <mat-placeholder>Data realizacji</mat-placeholder>
+                <mat-datetimepicker-toggle [for]="picker" matSuffix></mat-datetimepicker-toggle>
+                <mat-datetimepicker #picker type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+                <input matInput  formControlName="data_realizacji" [matDatetimepicker]="picker">
+                <mat-error *ngIf="formOrder.get('data_realizacji').invalid">{{getErrorMessageDataRealizacji()}}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                  <mat-placeholder>Data realizacji magazyn</mat-placeholder>
+                  <mat-datetimepicker-toggle [for]="datetimePickerMag" matSuffix></mat-datetimepicker-toggle>
+                  <mat-datetimepicker #datetimePickerMag type="datetime" openOnFocus="true" timeInterval="5"></mat-datetimepicker>
+                  <input matInput formControlName="data_realizacji_magazyn" [matDatetimepicker]="datetimePickerMag">
+                </mat-form-field> 
+
+              <mat-form-field class="example-full-width" appearance="outline">
+                  <textarea matInput formControlName="uwagi" placeholder="Uwagi" rows="5"></textarea>
+              </mat-form-field>
+
+      </form>
+
+      </div>
+
+      <div fxFlex="50%" > 
+        <form [formGroup]="formOrder">
+          <mat-form-field appearance="outline">
+            <mat-label>Wynikowy typ dokumentu</mat-label>
+            <mat-select  formControlName="typ_dok_erp_id">
+              <mat-option *ngFor="let typDok of typDokErpZam" [value]="typDok.typ_dok_erp_id">
+                {{typDok.typ_dok_erp_idm}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
+
+  </div>
+
+  <div fxFlex="40px"></div>
+
+  <div>
+    <h3>Produkty</h3>
+    <hr>
+  </div>
+
+  <div>
+
+      <form [formGroup]="formOrder" >
+
+          <mat-grid-list cols="20" rowHeight="100px" style="font-weight: 500;background: #f2f6f8; text-align: center">
+
+              <mat-grid-tile cols="1">L.p</mat-grid-tile>
+  
+              <mat-grid-tile colspan="6">Szczegóły produktu</mat-grid-tile>
+
+              <mat-grid-tile colspan="2">J.m.</mat-grid-tile>
+  
+              <mat-grid-tile colspan="2">Ilość oczekiwana</mat-grid-tile>
+  
+              <mat-grid-tile colspan="2">Ilość wydana</mat-grid-tile>
+  
+              <mat-grid-tile colspan="3">Uwagi</mat-grid-tile>
+  
+              <mat-grid-tile colspan="2">Czy generować zamówienie różnicowe?</mat-grid-tile>
+  
+              <mat-grid-tile colspan="2"></mat-grid-tile>
+          </mat-grid-list>
+          
+          <mat-grid-list cols="20" rowHeight="100px" formArrayName='order_item' *ngFor="let item of order_item.controls; index as index"  [ngClass]="{'archive-product' : order_item.controls[index].value['anulowany'] == 'T'}">
+
+
+            <mat-grid-tile cols="1">
+                <h4>{{ index + 1 }}.</h4>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="6" class="product-item" [formGroupName]="index">
+                <ng-select class="custom" [items]="products"
+                bindLabel="nazwajm"
+                dropdownPosition="auto"
+                bindValue="wytwor_id"
+                labelForId="nazwajm"
+                placeholder=""
+                appendTo="body"
+                [virtualScroll]="true"
+                formControlName="wytwor_id"
+                (change)="onChange($event,index)"
+                [loading]="productLoading">
+                    <ng-template  ng-option-tmp let-item="item" let-search="searchTerm">
+                      <div fxLayout="column" fxLayoutAlign=" start" style ="line-height: 18px;"  [ngClass]="{'brak-magazyn': item.ilosc_magazyn == 0}">
+                        <div><span><b>Nazwa: </b></span><span>{{item.nazwajm}}</span></div>
+                        <small><b>Indeks: </b> {{item.wytwor_idm}}</small>
+                        <small><b>Stan magazyn: </b> {{item.ilosc_magazyn}}</small>
+                      </div>
+                    </ng-template>
+                </ng-select> 
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2" [formGroupName]="index">
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="jm_idn" [readonly]="true">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2" [formGroupName]="index">
+                <mat-form-field appearance="outline">
+                  <input formControlName="ilosc_oczekiwana" matInput type="number">
+                  <!--<mat-error *ngIf="item.controls.ilosc_oczekiwana.invalid">Podaj ilość</mat-error>-->
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2" [formGroupName]="index">
+              <mat-form-field appearance="outline">
+                <input formControlName="ilosc_wydana" matInput type="number">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="3" [formGroupName]="index" >
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="uwagi_poz">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2" [formGroupName]="index">
+                <mat-checkbox formControlName="czy_zamowienie_roznicowe" labelPosition="before"></mat-checkbox>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2">
+              <button mat-icon-button matTooltip="Usuń" [disabled]="order_item_edit" (click)="removeProduct(index)"> 
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Anuluj" [disabled]="cancel_button" (click)="cancelProduct(index)"> 
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-grid-tile>
+            
+
+          </mat-grid-list>
+
+    
+          <div fxLayoutGap="20px" style="margin-top: 20px">
+              <button mat-raised-button color="primary" [disabled]="order_item_edit" (click)="additem()">Dodaj produkt</button>
+              <button mat-raised-button color="primary" [disabled]="order_item_edit" (click)="openDialogProduct()">Lista produktów</button>
+          </div>
+        </form>
+
+  </div>
+
+
+
+</div>
